@@ -19,6 +19,10 @@ COPY . .
 # 假设你的数据库叫 db.sqlite3，或者你把它放在 data/ 文件夹里
 RUN mkdir -p /app/data && chmod -R 777 /app/data
 
+
+# 或者添加健康检查
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/ || exit 1
 # 暴露端口 (请根据你的实际端口修改，比如 8000, 5000 等)
 EXPOSE 8000
 

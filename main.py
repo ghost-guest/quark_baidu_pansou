@@ -1,3 +1,7 @@
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -8,16 +12,16 @@ from contextlib import asynccontextmanager
 from utils.quark_api.quark_controller import QuarkController
 from utils.module import DatabaseManager
 from utils.scheduler import FileCleanupScheduler
-from utils.baidu_api.baidu_controller import  BaiduController
+from utils.baidu_api.baidu_controller import BaiduController
 from utils.plugin.plugin_zijianfuwuqi import ZjFuwuQi
 from utils.yml_utils.yml_operation import YmlOperation
-import os
 
 # 全局变量
 db_manager = None
 quark_client = None
 cleanup_scheduler = None
 baidu_client = None
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -39,7 +43,7 @@ async def lifespan(app: FastAPI):
     # 创建并启动定时清理任务
     cleanup_scheduler = FileCleanupScheduler(
         db_manager=db_manager,
-        client=[quark_client,baidu_client],
+        client=[quark_client, baidu_client],
         interval=60
     )
 
@@ -67,6 +71,8 @@ app.add_middleware(
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
 # @app.post("/")
 # async def quark_save(request: Request):
 #     print("收到POST请求")
@@ -166,7 +172,6 @@ async def get_resource(request: Request):
         return result
 
 
-
 @app.post("/get_share")
 async def get_share(request: Request):
     # 获取分享链接的方法
@@ -186,7 +191,7 @@ async def get_share(request: Request):
                 "shareurl": share_url,
                 "savepath": "百度分享资源",
                 "taskname": share_name,
-                "share_type":"baidu"
+                "share_type": "baidu"
                 # "share_password":share_passsword,
             }
             res = baidu_operator.save_and_share_file(dict_p)
@@ -201,7 +206,7 @@ async def get_share(request: Request):
                 "shareurl": share_url,
                 "savepath": "夸克分享资源",
                 "taskname": share_name,
-                "share_type":"quark"
+                "share_type": "quark"
             }
             res = quark_operator.save_file_and_get_share_url(dict_p)
             if res["code"] == 200:
@@ -232,6 +237,7 @@ async def update_config(request: Request):
     except Exception as e:
         print(f"更新配置出错: {e}")
         return {"code": 500, "message": "配置更新失败"}
+
 
 @app.post("/check_valid")
 async def check_valid(request: Request):
