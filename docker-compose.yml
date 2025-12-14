@@ -14,7 +14,7 @@ volumes:
 services:
   pansou:
     image: ghcr.io/fish2018/pansou-web:latest
-    container_name: pansou-app
+    container_name: pansou_new-app
     labels:
       - "autoheal=true"  # 标记此容器允许被autoheal重启
     ports:
@@ -72,7 +72,7 @@ services:
   # 自动健康检查和重启服务（容器级别监控）
   autoheal:
     image: willfarrell/autoheal:latest
-    container_name: pansou-autoheal
+    container_name: pansou-autoheal-new
     restart: always
     networks:
       - pansou-network # 加入自定义网络
