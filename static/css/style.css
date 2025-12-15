@@ -19,7 +19,6 @@ body {
     gap: 10px;
     align-items: center;
 }
-/* 搜索按钮 */
 
 .container {
     max-width: 1200px;
@@ -81,7 +80,6 @@ h1 {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     white-space: nowrap;
-
 }
 
 .search-btn:hover {
@@ -100,10 +98,12 @@ h1 {
         flex-direction: row;
         gap: 15px;
     }
+
     .search-controls {
         flex-direction: row;
         gap: 8px;
     }
+
     .search-btn,
     .check-validity-btn {
         padding: 10px 15px;
@@ -114,6 +114,7 @@ h1 {
         width: 65px;
         height: 80px;
     }
+
     .search-input {
         flex: 1;
     }
@@ -142,7 +143,7 @@ h1 {
 }
 
 .check-validity-btn {
-     padding: 12px 20px;
+    padding: 12px 20px;
     background: linear-gradient(45deg, #f093fb, #f5576c);
     color: white;
     border: none;
@@ -153,7 +154,6 @@ h1 {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
     white-space: nowrap;
-
 }
 
 .check-validity-btn:hover {
@@ -300,26 +300,29 @@ h1 {
     color: #95a5a6;
 }
 
-/* 分页样式 */
+/* 分页样式 - 优化移动端显示 */
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin-top: 20px;
     flex-wrap: wrap;
+    padding: 0 10px;
 }
 
 .page-btn {
-    padding: 10px 15px;
+    padding: 8px 12px;
     background: linear-gradient(45deg, #3498db, #2c3e50);
     color: white;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+    min-width: 40px;
+    font-size: 14px;
 }
 
 .page-btn:hover:not(:disabled) {
@@ -337,7 +340,9 @@ h1 {
 .page-info {
     font-weight: 500;
     color: #2c3e50;
-    padding: 10px 15px;
+    padding: 8px 12px;
+    font-size: 14px;
+    text-align: center;
 }
 
 /* 管理页面样式 */
@@ -558,7 +563,7 @@ h1 {
     }
 
     .results-container {
-        max-height: calc(100vh - 300px);
+        max-height: calc(100vh - 350px);
     }
 
     .result-item {
@@ -614,6 +619,23 @@ h1 {
         margin-left: 0;
         margin-top: 15px;
     }
+
+    /* 移动端分页优化 */
+    .pagination {
+        gap: 5px;
+        padding: 0 5px;
+    }
+
+    .page-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 35px;
+    }
+
+    .page-info {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -636,5 +658,25 @@ h1 {
 
     .result-name {
         font-size: 16px;
+    }
+
+    /* 小屏幕分页优化 */
+    .results-container {
+        max-height: calc(100vh - 320px);
+    }
+
+    .pagination {
+        gap: 3px;
+    }
+
+    .page-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+        min-width: 30px;
+    }
+
+    .page-info {
+        padding: 5px 8px;
+        font-size: 11px;
     }
 }

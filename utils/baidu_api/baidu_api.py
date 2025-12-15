@@ -7,7 +7,7 @@ from typing import Union, List, Any
 import urllib3
 import requests
 from retrying import retry
-
+import json
 
 class Network:
     """
@@ -189,7 +189,7 @@ class Network:
         }
         data = {
             # 针对一个分享链接带有多个分享文件的情况，转换一下列表格式
-            'fsidlist': f"[{','.join(params_list[2])}]",
+            'fsidlist': json.dumps([int(i) for i in params_list[2]]),
             # 目标目录为空，则直接等于根目录 '/'
             'path': f'/{folder_name}'
         }

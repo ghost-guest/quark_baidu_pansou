@@ -191,6 +191,36 @@ class BaiduController:
 
         return folder_name, res
 
+    def remove_bdclnd_from_cookie(self, cookie: str) -> str:
+        """
+        从 Cookie 字符串中移除 BDCLND 值
+
+        Args:
+            cookie (str): 原始 Cookie 字符串
+
+        Returns:
+            str: 移除 BDCLND 后的 Cookie 字符串
+        """
+        try:
+            # 拆分 cookie 字符串到字典
+            cookie_items = filter(None, cookie.split(';'))
+            cookies_dict = {}
+            for item in cookie_items:
+                if '=' in item:
+                    key, value = item.split('=', 1)
+                    cookies_dict[key.strip()] = value.strip()
+
+            # 移除 BDCLND 项
+            if 'BDCLND' in cookies_dict:
+                del cookies_dict['BDCLND']
+
+            # 重新构建 cookie 字符串
+            updated_cookie = '; '.join([f'{key}={value}' for key, value in cookies_dict.items()])
+            return updated_cookie
+        except Exception as e:
+            print(f"移除 BDCLND 时出错: {e}")
+            return cookie
+
     @config_hot_reload
     def save_and_share_file(self, task,save_path="百度分享资源"):
         """
@@ -200,6 +230,8 @@ class BaiduController:
         """
         # cookie
         cookie = self.config.get("baidu_cookie")
+        # 先处理下cookie，如果有BDCLND，则先删除掉
+        cookie = self.remove_bdclnd_from_cookie(cookie)
         self.headers["Cookie"] = cookie
         # 从文本链接控件获取全部链接，清洗并标准化链接
         link = self.normalize_link(task["shareurl"])
