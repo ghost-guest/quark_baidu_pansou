@@ -1,7 +1,7 @@
 class SearchApp {
     constructor() {
         this.searchKeyword = '';
-        this.selectedType = 'baidu';
+        this.selectedType = 'quark';
         this.searchResults = [];
         this.currentPage = 1;
         this.pageSize = 10;
@@ -381,11 +381,14 @@ class SearchApp {
         displayMessage = `分享链接: ${parts[1].trim()}`;
         shareLink = parts[1].trim();
     }
+    // 添加时效性提示
+    const expiryWarning = '<div class="expiry-warning">⚠️ 链接时效3分钟，过期请重新获取</div>';
 
     modal.innerHTML = `
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>${displayMessage}</p>
+            ${expiryWarning}
             <div class="modal-buttons">
                 <button class="copy-btn" data-link="${shareLink}">复制链接</button>
                 <button class="modal-close-btn">确定</button>

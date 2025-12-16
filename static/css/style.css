@@ -547,6 +547,19 @@ h1 {
     margin: 0 auto 20px auto;
 }
 
+/* 时效性警告样式 */
+.expiry-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px 0;
+    color: #856404;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -561,7 +574,12 @@ h1 {
     h1 {
         font-size: 24px;
     }
-
+    .expiry-warning {
+        font-size: 13px;
+        padding: 10px;
+        margin: 12px 0;
+        border-radius: 6px;
+    }
     .results-container {
         max-height: calc(100vh - 350px);
     }

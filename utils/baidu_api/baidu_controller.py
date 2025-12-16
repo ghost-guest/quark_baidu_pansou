@@ -324,6 +324,9 @@ class BaiduController:
         """删除转存的文件，节省空间"""
         cookie = self.config.get("baidu_cookie")
         self.headers["Cookie"] = cookie
+        # 获取 bdstoken 相关逻辑
+        bdstoken = self.network.get_bdstoken()
+        self.network.bdstoken = bdstoken
         print(f"删除前的bdstoken的值： {self.network.bdstoken}")
         if not self.network.bdstoken or not isinstance(self.network.bdstoken, str):
             self.network.bdstoken = self.network.get_bdstoken()
