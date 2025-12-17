@@ -410,11 +410,18 @@ class SearchApp {
     // 绑定复制按钮事件
     const copyBtn = modal.querySelector('.copy-btn');
     if (copyBtn) {
-        copyBtn.addEventListener('click', (e) => {
-            const link = e.target.dataset.link;
-            this.copyToClipboard(link);
-        });
-    }
+    copyBtn.addEventListener('click', (e) => {
+        const link = e.target.dataset.link;
+        this.copyToClipboard(link);
+        // 修改为显示对钩而不是弹窗
+        e.target.textContent = '✓ 已复制';
+        e.target.style.backgroundColor = '#28a745';
+        setTimeout(() => {
+            e.target.textContent = '复制链接';
+            e.target.style.backgroundColor = '';
+        }, 2000);
+    });
+}
 
     // 点击模态框外部关闭
     modal.addEventListener('click', (e) => {
@@ -424,7 +431,6 @@ class SearchApp {
     });
 }
 
-    // 添加复制到剪贴板的方法
     copyToClipboard(text) {
         // 创建临时文本区域
         const textArea = document.createElement('textarea');
@@ -437,22 +443,22 @@ class SearchApp {
         textArea.select();
         try {
             const successful = document.execCommand('copy');
+            // 移除所有 alert 弹窗，仅在控制台输出日志
             if (successful) {
-                // 显示复制成功提示
-                alert('链接已复制到剪贴板');
+                console.log('链接已复制到剪贴板');
             } else {
-                // 复制失败提示
-                alert('复制失败，请手动复制');
+                console.log('复制失败，请手动复制');
             }
         } catch (err) {
-            // 兼容性处理
+            // 兼容性处理，移除 alert 弹窗
             console.error('复制失败:', err);
-            alert('复制失败，请手动复制');
+            console.log('复制失败，请手动复制');
         }
 
         // 移除临时元素
         document.body.removeChild(textArea);
     }
+
 
     renderPagination() {
         if (this.totalPages <= 1) {
